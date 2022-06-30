@@ -1,13 +1,12 @@
 '----------------------------------------------------------------------
-'	<Title of Software> Installation Script
-'	Last Revised: 2014-12-16
+'	<Software Name> Installation Script
+'	Last Revised: <Date - YYYY-MM-DD>
 '	Revised By:  Lee Miller
 '----------------------------------------------------------------------
 
 On Error Resume Next
 
 '-[Declare Constants]--------------------------------------------------
-
 Const OverwriteExisting = True
 Const WaitOnReturn = True
 Const DisplayInteractiveMessage = True
@@ -18,7 +17,6 @@ Dim installDone, OSType, strAlreadyInstalled, strContinue, strIsInstalled, strIs
 Dim objFSO, objShell, objNetwork 
 
 '-[Create System Objects]----------------------------------------------
-
 Set objFSO=CreateObject("Scripting.FileSystemObject")
 Set objShell=CreateObject("Wscript.Shell")
 Set objNetwork=CreateObject("Wscript.Network")
@@ -30,7 +28,7 @@ If DisplayInteractiveMessage = True Then
 	Msg = msg & "The installation takes about 5 minutes and is silent with the exception "
 	Msg = msg & "of periodic progress bars that will be displayed." & vbCrLf & vbCrLf
 	Msg = msg & "You will be notified when it completes." & vbCrLf & vbCrLf
-	Msg = msg & "Please close Navisworks if it is open and then click OK to begin."
+	Msg = msg & "Please close <Software Name> if it is open and then click OK to begin."
 	strContinue = MsgBox (msg, 65, "New Software Install/Update Notification")
 End If
 If strContinue = 2 Then
@@ -40,11 +38,11 @@ End If
 'Check if the application is running
 strIsInstalled = IsInstalled (MsgSoftwareTitle)
 If strIsInstalled = False Then
-	strIsRunning = IsRunning ("Roamer.exe")
+	strIsRunning = IsRunning ("<Application>.exe")
 	If strIsRunning = True Then
 		If DisplayInteractiveMessage = True Then
-			Msg = "<Title of Software> is running so the installation cannot proceed." & vbCrLf & vbCrLf
-			Msg = msg & "Please close Navisworks and start the installation again."
+			Msg = "<Software Name> is running so the installation cannot proceed." & vbCrLf & vbCrLf
+			Msg = msg & "Please close <Software Name> and start the installation again."
 			MsgBox msg, 64, "New Software Install/Update Notification"
 		End If
 		WScript.Quit (4)
@@ -59,7 +57,7 @@ End If
 'Install <Title of Software>
 strIsInstalled = IsInstalled (MsgSoftwareTitle)
 If strIsInstalled = False Then
-	strQuoted = Chr(34) & "\\GROUP\HOK\FWR\RESOURCES\HSD\NAVISWORKS2014-SCCM\Addins\Exporters_R1_2014\Img\setup.exe" & Chr(34) & "  /W /QB /I \\GROUP\HOK\FWR\RESOURCES\HSD\NAVISWORKS2014-SCCM\Addins\Exporters_R1_2014\Img\Navisworks2014Exporters.ini /language en-us"
+	strQuoted = Chr(34) & "\\<Network Path>\HSD\<Software Name>-SCCM\Img\setup.exe" & Chr(34) & "  /W /QB /I \\<Network Path>\HSD\<Software Name>-SCCM\Img\<Software Name>.ini /language en-us"
 	objShell.Run strQuoted, 0, WaitOnReturn
 Else
 	If DisplayInteractiveMessage = True Then
